@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.frain.ticket.service;
+package com.frain.service.ticket;
 
 /**
  * @author kalven.meng
