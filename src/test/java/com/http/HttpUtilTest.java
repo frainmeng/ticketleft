@@ -52,7 +52,8 @@ public class HttpUtilTest {
 		HttpUtils httpUtil = HttpUtils.getInstance();
 		String uri = "https://kyfw.12306.cn/otn/leftTicket/queryT?leftTicketDTO.train_date=2016-02-05&leftTicketDTO.from_station=SHH&leftTicketDTO.to_station=BBH&purpose_codes=ADULT";
 		try {
-			httpUtil.execGet(uri);
+			String result = httpUtil.execGet(uri);
+			System.out.println(result);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

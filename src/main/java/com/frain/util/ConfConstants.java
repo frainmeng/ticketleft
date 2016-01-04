@@ -7,7 +7,7 @@ package com.frain.util;
  * @author kalven.meng
  *
  */
-public class Constants {
+public class ConfConstants {
 	
 	public static final String MAIL_CONFIG = "mailconfig.properties";
 	

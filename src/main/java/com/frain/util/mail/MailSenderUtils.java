@@ -3,23 +3,20 @@
  */
 package com.frain.util.mail;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.frain.util.Constants;
+import com.frain.util.ConfConstants;
 import com.frain.util.PropertyUtils;
 
 /**
@@ -27,7 +24,7 @@ import com.frain.util.PropertyUtils;
  *
  */
 public class MailSenderUtils {
-	private Log log = LogFactory.getLog(MailSenderUtils.class);
+	private static Logger log = LoggerFactory.getLogger(MailSenderUtils.class);
 	private static final String MAIL_USER_NAME = "mail.user.name";
 	private static final String MAIL_USER_PASSWORD = "mail.user.password";
 	private static final String MAIL_SEND_TO = "mail.send.to";
@@ -54,7 +51,7 @@ public class MailSenderUtils {
 	 */
 	private synchronized boolean init (){
 		if (isServiceOK) return isServiceOK; 
-		props = PropertyUtils.getProps(Constants.MAIL_CONFIG);
+		props = PropertyUtils.getProps(ConfConstants.MAIL_CONFIG);
 		try {
 			session = Session.getInstance(props, new Authenticator() {
 				@Override

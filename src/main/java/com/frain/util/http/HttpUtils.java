@@ -3,38 +3,28 @@
  */
 package com.frain.util.http;
 
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
-import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.frain.util.Constants;
+import com.frain.util.ConfConstants;
 import com.frain.util.PropertyUtils;
 
 
@@ -44,7 +34,7 @@ import com.frain.util.PropertyUtils;
  *
  */
 public class HttpUtils {
-	private static Log log = LogFactory.getLog(HttpUtils.class);
+	private static Logger log = LoggerFactory.getLogger(HttpUtils.class);
 	
 	private static String HTTP_CONN_MAX_TOTAL = "http.conn.max.total";
 	
@@ -70,7 +60,7 @@ public class HttpUtils {
 		if (isServiceOK) return isServiceOK;
 		try {
 			destroy();
-			props = PropertyUtils.getProps(Constants.HTTP_CONFIG);
+			props = PropertyUtils.getProps(ConfConstants.HTTP_CONFIG);
 			Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
 					.<ConnectionSocketFactory> create()
 					.register("https", new SSLConnectionSocketFactory(SSLContexts.custom()
@@ -123,7 +113,7 @@ public class HttpUtils {
 			CloseableHttpResponse response = httpclient.execute(httpget);
 			HttpEntity httpEntity = response.getEntity();
 			result = EntityUtils.toString(httpEntity);
-			System.out.println(result);
+//			log.info(result);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.error("÷¥––«Î«Û ß∞‹", e);

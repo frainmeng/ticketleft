@@ -22,14 +22,14 @@ public class PropertyUtils {
 		Properties mailProps = new Properties();
 		Properties httpProps = new Properties();
 		try {
-			mailProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(Constants.MAIL_CONFIG));
-			httpProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(Constants.HTTP_CONFIG));
+			mailProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(ConfConstants.MAIL_CONFIG));
+			httpProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(ConfConstants.HTTP_CONFIG));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.error("初始化配置文件异常", e);
 		}
-		propsMap.put(Constants.MAIL_CONFIG, mailProps);
-		propsMap.put(Constants.HTTP_CONFIG, httpProps);
+		propsMap.put(ConfConstants.MAIL_CONFIG, mailProps);
+		propsMap.put(ConfConstants.HTTP_CONFIG, httpProps);
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class PropertyUtils {
 	 */
 	public static String getPropValue (String propsKey, String propKey) {
 		
-		return propsMap.get(propsKey) != null ? null : propsMap.get(propsKey).getProperty(propKey);
+		return propsMap.get(propsKey) == null ? null : propsMap.get(propsKey).getProperty(propKey);
 		
 	}
 	
