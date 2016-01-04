@@ -19,7 +19,7 @@ import com.frain.biz.QueryTicketLeft;
 public class Main {
 	private static Logger log = LoggerFactory.getLogger(Main.class);
 	 
-	public static void main(String[] args) {
+	public static void startUp() {
 		final QueryTicketLeft query = new QueryTicketLeft();
 		
 		Runnable task = new Runnable() {
