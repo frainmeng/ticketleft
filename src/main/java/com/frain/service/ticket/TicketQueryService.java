@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.frain.model.QueryTask;
 import com.frain.model.TicketDataInfo;
 import com.frain.model.TicketLeftQueryDTO;
 import com.frain.util.ConfConstants;
@@ -39,6 +40,28 @@ public class TicketQueryService {
 			log.info("票务查询失败：{}" ,sb.toString());
 		}
 		return ticketLeftQueryDTO.getData();
-		
 	}
+	
+	public List<TicketDataInfo> getTicketLeft (QueryTask queryTask) {
+		List<TicketDataInfo> list = null;
+		try {
+			String uri = queryTask.getReqUri();
+			String result = httpUtils.execGet(uri);
+			TicketLeftQueryDTO ticketLeftQueryDTO = JSON.parseObject(result, TicketLeftQueryDTO.class);
+			log.info(queryTask.getTaskName()+"票务查询返回信息：" + ticketLeftQueryDTO.toString());
+			String[] messages = ticketLeftQueryDTO.getMessages();
+			if (null != messages && messages.length > 0) {
+				StringBuilder sb = new StringBuilder();
+				for (String message : messages) {
+					sb.append(message).append("  ");
+				}
+				log.info(queryTask.getTaskName()+"票务查询失败：{}" ,sb.toString());
+			}
+			list = ticketLeftQueryDTO.getData();
+		} catch (Exception e) {
+			log.error(queryTask.getTaskName()+"任务异常", e);
+		}
+		return list;
+	}
+	
 }

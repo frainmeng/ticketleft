@@ -38,6 +38,17 @@
     			<path>/ticketleft</path>
     		</configuration>
     	</plugin>
+  		<plugin>
+  			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>9.3.0.RC1</version>
+			<configuration>
+				<webApp>
+			      <contextPath>/ticketquery</contextPath>
+			    </webApp>
+			</configuration>
+  		</plugin>
+  		
   		
   	</plugins>
   	
@@ -77,17 +88,7 @@
 	    <artifactId>javax.mail</artifactId>
 	    <version>1.5.5</version>
 	</dependency>
-  	<dependency>
-		<groupId>javax</groupId>
-		<artifactId>javaee-api</artifactId>
-		<version>7.0</version>
-		<exclusions>
-			<exclusion>
-				<groupId>com.sun.mail</groupId>
-				<artifactId>javax.mail</artifactId>
-			</exclusion>
-		</exclusions>
-	</dependency>
+  	
 	<dependency>
 		<groupId>org.apache.httpcomponents</groupId>
 		<artifactId>httpclient</artifactId>
@@ -109,6 +110,12 @@
 		<artifactId>slf4j-log4j12</artifactId>
 		<version>1.7.13</version>
 	</dependency>
-	
+
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	</dependency>
   </dependencies>
 </project>

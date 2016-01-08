@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.frain.biz.QueryTicketLeft;
+import com.frain.service.ticket.QueryTicketLeftService;
 
 /**
  * @author kalven.meng
@@ -18,25 +18,41 @@ import com.frain.biz.QueryTicketLeft;
  */
 public class Main {
 	private static Logger log = LoggerFactory.getLogger(Main.class);
+	private static boolean status = false;
+	private static ScheduledExecutorService scheduleService = null;
 	
 	public static void main(String[] args) {
 		startUp();
 	}
 	
 	public static void startUp() {
-		final QueryTicketLeft query = new QueryTicketLeft();
+		scheduleService = Executors.newSingleThreadScheduledExecutor();
+		final QueryTicketLeftService query = new QueryTicketLeftService();
 		
 		Runnable task = new Runnable() {
 			 
 			public void run() {
 				// TODO Auto-generated method stub
 				log.info("开始查询");
-				query.queryTicket();
+//				query.queryTicket();
 				log.info("查询结束");
 			}
 		};
-		ScheduledExecutorService scheduleService = Executors.newSingleThreadScheduledExecutor();
 		scheduleService.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
-		log.info("系统启动成功");
+		status = true;
+		log.info("服务启动成功");
+	}
+	
+	public static void shutdown () {
+		if (null != scheduleService) {
+			scheduleService.shutdown();
+			scheduleService = null;
+		}
+		status = false;
+		log.info("服务停止成功");
+	}
+	
+	public static boolean getStatus() {
+		return status;
 	}
 }

@@ -12,4 +12,6 @@ public class ConfConstants {
 	public static final String MAIL_CONFIG = "mailconfig.properties";
 	
 	public static final String HTTP_CONFIG = "httpconfig.properties";
+	
+	public static final String DEFAULT_TASK_CONFIG = "defaulttask.properties";
 }

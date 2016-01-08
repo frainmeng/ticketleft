@@ -82,7 +82,6 @@ public class TicketLeftQueryDTO {
 		sb.append("{");
 		sb.append("httpstatus:").append(httpstatus);
 		sb.append(",status:").append(status);
-		sb.append(",status:").append(status);
 		sb.append(",messages:[");
 		StringBuilder messageStr = new StringBuilder();
 		for(String message : messages){

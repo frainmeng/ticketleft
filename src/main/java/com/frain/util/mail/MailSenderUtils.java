@@ -81,7 +81,7 @@ public class MailSenderUtils {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(props.getProperty(MAIL_USER_NAME)));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(props.getProperty(MAIL_SEND_TO)));
+				InternetAddress.parse(mailContent.getSendTo()));
 			message.setSubject(mailContent.getSubject());
 			message.setText(mailContent.getText());
 			Transport.send(message);

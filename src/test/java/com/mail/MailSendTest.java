@@ -50,7 +50,7 @@ public class MailSendTest {
 	@Test
 	public void test() {
 		MailService mailService = new MailService();
-		mailService.sendMail("test mail", "Hello World");
+		mailService.sendMail("test mail", "Hello World","446404131@qq.com");
 	}
 
 }

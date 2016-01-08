@@ -1,9 +1,8 @@
 /**
  * 
  */
-package com.frain.biz;
+package com.frain.service.ticket;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,45 +10,33 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.frain.model.QueryTask;
 import com.frain.model.TicketDataInfo;
 import com.frain.service.mail.MailService;
-import com.frain.service.ticket.TicketQueryService;
 import com.frain.util.TicInfoConstants;
 
 /**
  * @author kalven.meng
  *
  */
-public class QueryTicketLeft {
-	private static Logger log = LoggerFactory.getLogger(QueryTicketLeft.class);
+public class QueryTicketLeftService {
+	private static Logger log = LoggerFactory.getLogger(QueryTicketLeftService.class);
 	private TicketQueryService ticketService ;
 	private MailService mailService ;
-	private Map<String, String> ticketRequireMap ;
-	public QueryTicketLeft () {
+	public QueryTicketLeftService () {
 		init();
 	}
 	private void  init () {
 		ticketService = new TicketQueryService();
 		mailService = new MailService();
-		ticketRequireMap = new HashMap<String, String>();
-		ticketRequireMap.put("G108", "G108");
-		ticketRequireMap.put("D9580", "D9580");
-		ticketRequireMap.put("D4502", "D4502");
-		ticketRequireMap.put("G114", "G114");
-		ticketRequireMap.put("G230", "G230");
-		ticketRequireMap.put("G116", "G116");
-		ticketRequireMap.put("G124", "G124");
-		ticketRequireMap.put("G1228", "G1228");
-		ticketRequireMap.put("G7296", "G7296");
-		ticketRequireMap.put("G134", "G134");
 	}
 	
-	public void queryTicket(){
-		
+	
+	public void query(QueryTask queryTask){
 		try {
-			List<TicketDataInfo> tickets =  ticketService.getTicketLeft();
+			List<TicketDataInfo> tickets =  ticketService.getTicketLeft(queryTask);
 			if (null == tickets) {
-				log.info("没有查询到任何查票");
+				log.info("没有查询到车票信息");
 				return;
 			}
 			StringBuilder sb = new StringBuilder();
@@ -57,7 +44,7 @@ public class QueryTicketLeft {
 				if (ticketDataInfo.isExistsZe()) {
 					Map<String, String> ticketInfo = ticketDataInfo.getQueryLeftNewDTO();
 					String trainCode = ticketInfo.get(TicInfoConstants.STATION_TRAIN_CODE);
-					if (!ticketRequireMap.containsKey(trainCode)) continue;
+					if (!queryTask.getTrainCodeSet().contains(trainCode)) continue;
 					sb.append("车次 :").append(ticketInfo.get(TicInfoConstants.STATION_TRAIN_CODE))
 					.append("  ")
 					.append("发车时间:").append(ticketInfo.get(TicInfoConstants.START_TIME))
@@ -76,7 +63,7 @@ public class QueryTicketLeft {
 			}
 			String mailText = sb.toString();
 			if (StringUtils.isNotEmpty(mailText)) {
-				mailService.sendMail("票务提醒", sb.toString());
+				mailService.sendMail("票务提醒", sb.toString(),queryTask.getMailSendTo());
 				log.info("查询到余票："+mailText);
 			} else {
 				log.info("没有查到余票");

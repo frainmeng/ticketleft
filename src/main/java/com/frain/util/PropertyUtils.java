@@ -21,15 +21,18 @@ public class PropertyUtils {
 	static {
 		Properties mailProps = new Properties();
 		Properties httpProps = new Properties();
+		Properties defaultTaskProps = new Properties();
 		try {
 			mailProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(ConfConstants.MAIL_CONFIG));
 			httpProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(ConfConstants.HTTP_CONFIG));
+			defaultTaskProps.load(PropertyUtils.class.getClassLoader().getResourceAsStream(ConfConstants.DEFAULT_TASK_CONFIG));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			log.error("初始化配置文件异常", e);
 		}
 		propsMap.put(ConfConstants.MAIL_CONFIG, mailProps);
 		propsMap.put(ConfConstants.HTTP_CONFIG, httpProps);
+		propsMap.put(ConfConstants.DEFAULT_TASK_CONFIG, defaultTaskProps);
 	}
 	
 	/**

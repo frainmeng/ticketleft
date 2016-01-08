@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.frain.model.TicketDataInfo;
 import com.frain.service.mail.MailService;
+import com.frain.service.schedule.ScheduleService;
 import com.frain.service.ticket.TicketQueryService;
 import com.frain.util.TicInfoConstants;
 
@@ -35,8 +36,7 @@ public class QueryTicketLeftTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void test() {
+	public void teste() {
 		
 		TicketQueryService service = new TicketQueryService();
 		MailService mailService = new MailService();
@@ -66,6 +66,18 @@ public class QueryTicketLeftTest {
 		}
 //		mailService.sendMail("” ∆±Ã·–—", sb.toString());
 		System.out.println(sb);
+		
+	}
+	@Test
+	public void test() {
+		ScheduleService schduleService = ScheduleService.getInstance();
+		schduleService.start();
+		try {
+			Thread.sleep(1000*1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
